@@ -26,7 +26,7 @@ figure(3)
 bode(G)
 
 figure(4)
-step(feedback(2*10*G,1))
+step(feedback(10*G,1))
 
 %% second order systems
 % System parameters
@@ -65,3 +65,45 @@ Gp = 1/(0.1*s+1)
 T = Gp/(1+Gp)
 figure(6)
 step(T)
+
+
+%% In Lab velocity Control
+plot(ScopeData.signals.values(1),ScopeData.signals.values(2))
+
+% Frequency response
+frequencies = [0,1,5,10,11,12,20,30]
+amplitudes_dB = [8.057504527,8.057504527,7.394916161,5.640135167,5.105450102,4.825235813,1.138097027,-3.818429963] % in dB
+phases = [0,-11.17267701,-38.67465117,-68.75493542,-75.63042896,-79.06817573,-103.1324031,-128.9155039] % in Degrees
+amplitudes = [2.528571429,2.528571429,2.342857143,1.914285714,1.8,1.742857143,1.14,0.644285714] % Rad/s/v
+% Create a frequency response data object
+freq_data = idfrd(amplitudes, frequencies, 0);
+
+% Estimate transfer function (change '1' to the desired order of the system)
+sys = tfest(freq_data, 1)
+
+% plot bode like plot, with the added points
+w = logspace(-1,2,100);
+[mag,phase] = bode(sys*(1/(0.05*s+1)),w);
+
+figure(1);
+subplot(2,1,1)
+semilogx(w,20*log10(squeeze(mag)))
+hold on
+semilogx(frequencies, 20*log10(amplitudes), '*');
+
+subplot(2,1,2)
+semilogx(w,squeeze(phase))
+hold on
+semilogx(frequencies,phases)
+
+subplot(2,1,1);
+ylabel('Magnitude (dB)');
+title('Bode Plot with Measured Data Points');
+legend('Transfer function', 'Measured Data');
+grid on;
+
+subplot(2,1,2);
+xlabel('Frequency (Hz)');
+ylabel('Phase (degrees)');
+grid on;
+
