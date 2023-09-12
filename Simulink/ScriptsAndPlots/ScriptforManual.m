@@ -107,3 +107,62 @@ xlabel('Frequency (Hz)');
 ylabel('Phase (degrees)');
 grid on;
 
+
+%% Ziegler-Nichols - Step response velocity control  -  test
+% select visually the slope start and end points
+time = ScopeData.time(210:230);
+y=ScopeData.signals.values(210:230,2);
+
+% run fit function
+[curve, goodness] = fit( time, y, 'poly1' );
+
+% plot response:
+figure(1);
+plot(ScopeData.time,ScopeData.signals.values(:,1))
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.')
+plot(curve)
+plot(ScopeData.time,17.5*ones(size(ScopeData.time)))
+grid on
+axis([0.95 1.75 -1 25])
+title('Ziegler-Nichols Curve fit')
+legend Input Output Curve
+xlabel Time [sec]
+ylabel Amplitude
+
+%% unity feedback
+
+s=tf('s');
+G = 2.5/(0.1*s+1);
+LPF = 1/(0.05*s+1);
+figure(1)
+plot(ScopeData.time,ScopeData.signals.values(:,1),'LineWidth',1)
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','LineWidth',4);
+[y,t] = lsim(G/(1+G),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'LineWidth',1);
+[y,t] = lsim(G*LPF/(1+G*LPF),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'LineWidth',1);
+grid on
+title('Square wave response - Comparison')
+legend Input ActualSystem Theoretical WithFilter
+xlabel Time[sec]
+ylabel [Rad/s]
+
+%% Pi Controller
+
+s=tf('s');
+G = 2.5/(0.1*s+1);
+LPF = 1/(0.05*s+1);
+C = 0.5+5/s;
+figure(1)
+plot(ScopeData.time,ScopeData.signals.values(:,1),'LineWidth',1)
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','LineWidth',4);
+[y,t] = lsim(G*LPF*C/(1+G*LPF*C),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'LineWidth',1);
+grid on
+title('PI Controller, Actual vs Simulated')
+legend Input ActualSystem TheoreticalWithFilter
+xlabel Time[sec]
+ylabel [Rad/s]
