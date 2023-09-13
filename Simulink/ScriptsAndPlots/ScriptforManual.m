@@ -166,3 +166,17 @@ title('PI Controller, Actual vs Simulated')
 legend Input ActualSystem TheoreticalWithFilter
 xlabel Time[sec]
 ylabel [Rad/s]
+
+%% transient response
+s=tf('s');
+wn=1
+xsi=0.7
+G=0.9*wn^2/(s^2+xsi*2*s+wn^2)
+t = [10/size(sys,1):10/size(sys,1):10];
+sys = step(G);
+figure(1);
+step(G)
+hold on
+plot(t,ones(size(t,2),1))
+axis([0 10 0 1.1])
+title('Transient Response Analysis')
