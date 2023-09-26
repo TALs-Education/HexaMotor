@@ -172,11 +172,19 @@ s=tf('s');
 wn=1
 xsi=0.7
 G=0.9*wn^2/(s^2+xsi*2*s+wn^2)
-t = [10/size(sys,1):10/size(sys,1):10];
-sys = step(G);
+[sys t] = step(G);
 figure(1);
 step(G)
 hold on
+plot(t,sys,'LineWidth',3)
+t = [10/size(sys,1):10/size(sys,1):10];
 plot(t,ones(size(t,2),1))
 axis([0 10 0 1.1])
 title('Transient Response Analysis')
+
+%% positionControl
+s=tf('s');
+data = iddata(ScopeData.signals.values(:,2),ScopeData.signals.values(:,1),0.005)
+init_sys = 25/(0.05*s^2+s+25)
+T1=tfest(data,2,0)
+T2=tfest(data,init_sys)
