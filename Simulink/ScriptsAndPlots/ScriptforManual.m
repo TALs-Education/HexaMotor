@@ -188,3 +188,36 @@ data = iddata(ScopeData.signals.values(:,2),ScopeData.signals.values(:,1),0.005)
 init_sys = 25/(0.05*s^2+s+25)
 T1=tfest(data,2,0)
 T2=tfest(data,init_sys)
+
+%% OS and Tp calculation
+k=2.5
+tau=0.1
+
+OS = 0.25
+Tp = 0.2
+xi = sqrt(1/((pi/log(OS))^2+1))
+wn = pi/Tp/sqrt(1-xi^2)
+
+Kp = wn^2*tau/k
+Kd = (2*xi*wn*tau-1)/k
+
+%% lead lag
+s= tf('s')
+P = k/(tau*s+1)/s
+C= Kp+Kd*s
+
+figure(3)
+bode(P*C)
+hold on
+Lead = (1+0.2/17.5*3*s)/(1+0.0114*s)
+bode(P*C*Lead)
+hold off
+grid on
+
+figure(4)
+step(P*C/(1+P*C))
+hold on
+step(P*C*Lead/(1+P*C*Lead))
+hold off
+grid on
+legend P*C P*C*Lead
