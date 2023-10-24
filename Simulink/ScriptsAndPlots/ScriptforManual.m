@@ -189,35 +189,142 @@ init_sys = 25/(0.05*s^2+s+25)
 T1=tfest(data,2,0)
 T2=tfest(data,init_sys)
 
+
+%% Position step response:
+OS = 0.23
+Tp = 0.16
+Kp = 10
+
+xi = sqrt(1/(1+(pi/log(OS))^2))
+wn = pi/Tp/sqrt(1-xi)
+
+tau = 1/(2*xi*wn)
+k = wn^2*tau/Kp
+
+% Generate plots from recordings and simulated transfer function
+s=tf('s');
+G = k/(tau*s+1)/s; % update the transfer function values
+figure(1)
+plot(ScopeData.time,ScopeData.signals.values(:,1))
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','MarkerSize',5,'MarkerEdgeColor','r');
+[y,t] = lsim(Kp*G/(1+Kp*G),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'k','LineWidth',2);
+hold off
+grid on
+title('Square wave response')
+legend Input ActualSystem Theoretical
+xlabel Time[sec]
+ylabel [Rad]
+axis([0 5 -0.3 1.3])
+
+%% frequency response:
+% Estimate transfer function
+s=tf('s'); 
+data = iddata(ScopeData.signals.values(:,2),ScopeData.signals.values(:,1),0.005);
+T=tfest(data,2,0)
+
+Kp = 10
+
+wn = sqrt(T.Denominator(3))
+tau = 1/T.Denominator(2)
+k = wn^2*tau/Kp
+
+% Generate plots from recordings and simulated transfer function
+s=tf('s');
+G = k/(tau*s+1)/s % update the transfer function values
+figure(1)
+plot(ScopeData.time,ScopeData.signals.values(:,1))
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','MarkerSize',7,'MarkerEdgeColor','r');
+[y,t] = lsim(Kp*G/(1+Kp*G),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'k','LineWidth',1);
+hold off
+grid on
+title('Frequency response')
+legend Input ActualSystem Theoretical
+xlabel Time[sec]
+ylabel [Rad]
+
 %% OS and Tp calculation
-k=2.5
-tau=0.1
+k=2.454
+tau=0.0707
 
 OS = 0.25
-Tp = 0.2
+Tp = 0.15
 xi = sqrt(1/((pi/log(OS))^2+1))
 wn = pi/Tp/sqrt(1-xi^2)
 
 Kp = wn^2*tau/k
 Kd = (2*xi*wn*tau-1)/k
 
+C = Kp + Kd*s
+G = k/(tau*s+1)/s
+
+% figure(1)
+% step(G*C/(1+G*C))
+
+figure(1)
+plot(ScopeData.time,ScopeData.signals.values(:,1))
+hold on
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','MarkerSize',5,'MarkerEdgeColor','r');
+[y,t] = lsim(C*G/(1+C*G),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'k','LineWidth',2);
+hold off
+grid on
+title('Square wave response PD Controller')
+legend Input ActualSystem Theoretical
+xlabel Time[sec]
+ylabel [Rad]
+axis([0 5 -0.3 1.5])
+
 %% lead lag
+k=2.454
+tau=0.0707
+
+Kp = 15.1
+Kd = 0.125
+
 s= tf('s')
 P = k/(tau*s+1)/s
 C= Kp+Kd*s
 
+a= 3;
+tauL = 0.2/23;
 figure(3)
 bode(P*C)
 hold on
-Lead = (1+0.2/17.5*3*s)/(1+0.0114*s)
+Lead = (1+tauL*a*s)/(1+tauL*s)
 bode(P*C*Lead)
 hold off
 grid on
+legend PD PD_Lead
 
 figure(4)
-step(P*C/(1+P*C))
+plot(ScopeData.time,ScopeData.signals.values(:,1))
 hold on
-step(P*C*Lead/(1+P*C*Lead))
+plot(ScopeData.time,ScopeData.signals.values(:,2),'.','MarkerSize',5,'MarkerEdgeColor','r');
+[y,t] = lsim(C*G*Lead/(1+C*G*Lead),ScopeData.signals.values(:,1),ScopeData.time);
+plot(t,y,'k','LineWidth',2);
 hold off
 grid on
-legend P*C P*C*Lead
+title('Square wave response PD , LeadLag Controller')
+legend Input ActualSystem Theoretical
+xlabel Time[sec]
+ylabel [Rad]
+axis([0 5 -0.3 1.5])
+
+%% bonus plot
+figure(5)
+plot(rec1.time,rec1.signals.values(:,1),'k')
+hold on
+plot(rec1.time,rec1.signals.values(:,2),'r','LineWidth',2)
+plot(rec2.time,rec2.signals.values(:,2),'c','LineWidth',2)
+plot(rec3.time,rec3.signals.values(:,2),'b','LineWidth',2)
+hold off
+grid on
+title('Motor Controller design process')
+legend Input Kp PD PD-Lead
+xlabel Time[sec]
+ylabel [Rad]
+axis([0 5 -0.3 1.5])
