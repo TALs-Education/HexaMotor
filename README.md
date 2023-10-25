@@ -9,9 +9,9 @@ Powered by Simulink, it not only generates the code for the embedded setup but a
 This design choice allows students to concentrate on control implementation rather than the intricacies of code writing. 
 With a foundation built around a DC motor, HexaMotor offers a tangible experience of system dynamics and control.
 
-![Setup Image](./Images/HexaMotor Velocity Control.jpg)
+![Setup Image](./Images/HexaMotor%20Velocity%20Control.jpg)
 
-![Simulink model](./Images/HexaMotor Position Control simulink.jpg)
+![Simulink model](./Images/HexaMotor%20Position%20Control%20simulink.jpg)
 
 ## Velocity Control Experiment
 
@@ -24,7 +24,7 @@ With a foundation built around a DC motor, HexaMotor offers a tangible experienc
 - **Velocity Control Implementation: Proportional & Proportional-Integral Control Loops**
 - **Controller Performance Under Load**
 
-  ![Plot for Close Loop Step Response](./Images/HexaMotor Velocity Control step response.jpg)
+  ![Plot for Close Loop Step Response](./Images/HexaMotor%20Velocity%20Control%20step%20response.jpg)
   
 ## Position Control Experiment
 
@@ -38,11 +38,11 @@ With a foundation built around a DC motor, HexaMotor offers a tangible experienc
 - **Lead-Lag Compensator Controller Design and Implementation**
 - **Force FeedForward Example: Compliant Motor Control**
 
-  ![Force sensor Image](./Images/HexaMotor Position Control.jpg)
+  ![Force sensor Image](./Images/HexaMotor%20Position%20Control.jpg)
 
-  ![Plot for Position Close Loop Step Response](./Images/HexaMotor Position Control controller design.jpg)
+  ![Plot for Position Close Loop Step Response](./Images/HexaMotor%20Position%20Control%20controller%20design.jpg)
 
-  ![Plot for Frequency Response, System Identification](./Images/HexaMotor Position Control frequency response.jpg)
+  ![Plot for Frequency Response, System Identification](./Images/HexaMotor%20Position%20Control%20frequency%20response.jpg)
   
 ## Setup & Usage
 
