@@ -9,9 +9,9 @@ Powered by Simulink, it not only generates the code for the embedded setup but a
 This design choice allows students to concentrate on control implementation rather than the intricacies of code writing. 
 With a foundation built around a DC motor, HexaMotor offers a tangible experience of system dynamics and control.
 
-![Setup Image](./Images/HexaMotor%20Velocity%20Control.jpg)
+<img src="./Images/HexaMotor%20Velocity%20Control.jpg" alt="HexaMotor Setup" width="500"/>
 
-![Simulink model](./Images/HexaMotor%20Position%20Control%20simulink.jpg)
+<img src="./Images/HexaMotor%20Position%20Control%20simulink.jpg" alt="HexaMotor Simulink Model" width="500"/>
 
 ## Velocity Control Experiment
 
@@ -24,8 +24,8 @@ With a foundation built around a DC motor, HexaMotor offers a tangible experienc
 - **Velocity Control Implementation: Proportional & Proportional-Integral Control Loops**
 - **Controller Performance Under Load**
 
-  ![Plot for Close Loop Step Response](./Images/HexaMotor%20Velocity%20Control%20step%20response.jpg)
-  
+<img src="./Images/HexaMotor%20Velocity%20Control%20step%20response.jpg" alt="Plot for Close Loop Step Response" width="500"/>
+
 ## Position Control Experiment
 
 ### Subjects Covered
@@ -38,11 +38,11 @@ With a foundation built around a DC motor, HexaMotor offers a tangible experienc
 - **Lead-Lag Compensator Controller Design and Implementation**
 - **Force FeedForward Example: Compliant Motor Control**
 
-  ![Force sensor Image](./Images/HexaMotor%20Position%20Control.jpg)
+  <img src="./Images/HexaMotor%20Position%20Control.jpg" alt="Force sensor Image" width="500"/>
 
-  ![Plot for Position Close Loop Step Response](./Images/HexaMotor%20Position%20Control%20controller%20design.jpg)
+  <img src="./Images/HexaMotor%20Position%20Control%20controller%20design.jpg" alt="Plot for Position Close Loop Step Response" width="500"/>
 
-  ![Plot for Frequency Response, System Identification](./Images/HexaMotor%20Position%20Control%20frequency%20response.jpg)
+  <img src="./Images/HexaMotor%20Position%20Control%20frequency%20response.jpg" alt="Plot for Frequency Response, System Identification" width="500"/>
   
 ## Setup & Usage
 
