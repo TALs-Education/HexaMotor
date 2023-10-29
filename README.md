@@ -76,8 +76,9 @@ The entire setup has been designed in Fusion360 as an open-source project meant 
 
 For detailed instructions on setting up and running experiments, refer to the provided manuals:
 
-- **Position Control**: [HexaMotor Position Control Manual (PDF)](HexaMotor%20Position%20Control.pdf)
-- **Velocity Control**: [HexaMotor Velocity Control Manual (PDF)](HexaMotor%20Velocity%20Control.pdf)
+- **Part1: Velocity Control**: [HexaMotor Velocity Control Manual (PDF)](HexaMotor%20Velocity%20Control.pdf)
+- **Part2: Position Control**: [HexaMotor Position Control Manual (PDF)](HexaMotor%20Position%20Control.pdf)
+
 
 ## License
 

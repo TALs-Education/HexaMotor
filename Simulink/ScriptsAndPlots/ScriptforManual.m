@@ -60,13 +60,6 @@ grid on;
 hold off;
 
 
-%% Position control
-Gp = 1/(0.1*s+1)
-T = Gp/(1+Gp)
-figure(6)
-step(T)
-
-
 %% In Lab velocity Control
 plot(ScopeData.signals.values(1),ScopeData.signals.values(2))
 
@@ -182,6 +175,27 @@ plot(t,ones(size(t,2),1))
 axis([0 10 0 1.1])
 title('Transient Response Analysis')
 
+%% Position control
+s=tf('s')
+Gp = 2.5/(0.1*s+1)/s;
+C=10;
+T = Gp*C/(1+Gp*C)
+figure(6)
+step(T)
+figure(7)
+rlocus(Gp)
+
+OS = 0.35
+Tp = 0.212
+Kp = 10
+
+xi = sqrt(1/(1+(pi/log(OS))^2))
+wn = pi/Tp/sqrt(1-xi^2)
+
+tau = 1/(2*xi*wn)
+k = wn^2*tau/Kp
+
+
 %% positionControl
 s=tf('s');
 data = iddata(ScopeData.signals.values(:,2),ScopeData.signals.values(:,1),0.005)
@@ -196,7 +210,7 @@ Tp = 0.16
 Kp = 10
 
 xi = sqrt(1/(1+(pi/log(OS))^2))
-wn = pi/Tp/sqrt(1-xi)
+wn = pi/Tp/sqrt(1-xi^2)
 
 tau = 1/(2*xi*wn)
 k = wn^2*tau/Kp
@@ -216,7 +230,7 @@ title('Square wave response')
 legend Input ActualSystem Theoretical
 xlabel Time[sec]
 ylabel [Rad]
-axis([0 5 -0.3 1.3])
+axis([0 5 -0.3 1.5])
 
 %% frequency response:
 % Estimate transfer function
@@ -247,8 +261,8 @@ xlabel Time[sec]
 ylabel [Rad]
 
 %% OS and Tp calculation
-k=2.454
-tau=0.0707
+k = 2.454
+tau = 0.0707
 
 OS = 0.25
 Tp = 0.15
@@ -285,11 +299,11 @@ tau=0.0707
 Kp = 15.1
 Kd = 0.125
 
-s= tf('s')
+s = tf('s')
 P = k/(tau*s+1)/s
 C= Kp+Kd*s
 
-a= 3;
+a = 3;
 tauL = 0.2/23;
 figure(3)
 bode(P*C)
