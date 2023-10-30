@@ -205,8 +205,8 @@ T2=tfest(data,init_sys)
 
 
 %% Position step response:
-OS = 0.23
-Tp = 0.16
+OS = 0.225
+Tp = 0.175
 Kp = 10
 
 xi = sqrt(1/(1+(pi/log(OS))^2))
@@ -260,10 +260,11 @@ legend Input ActualSystem Theoretical
 xlabel Time[sec]
 ylabel [Rad]
 
-%% OS and Tp calculation
-k = 2.454
-tau = 0.0707
+%% PD controller OS and Tp calculation
+k = 2.418
+tau = 0.0705
 
+% PD controller performance
 OS = 0.25
 Tp = 0.15
 xi = sqrt(1/((pi/log(OS))^2+1))
@@ -275,10 +276,11 @@ Kd = (2*xi*wn*tau-1)/k
 C = Kp + Kd*s
 G = k/(tau*s+1)/s
 
-% figure(1)
-% step(G*C/(1+G*C))
-
 figure(1)
+step(G*C/(1+G*C))
+
+% response with PD controller
+figure(2)
 plot(ScopeData.time,ScopeData.signals.values(:,1))
 hold on
 plot(ScopeData.time,ScopeData.signals.values(:,2),'.','MarkerSize',5,'MarkerEdgeColor','r');
