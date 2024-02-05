@@ -79,6 +79,8 @@ For detailed instructions on setting up and running experiments, refer to the pr
 - **Part1: Velocity Control**: [HexaMotor Velocity Control Manual (PDF)](HexaMotor%20Velocity%20Control.pdf)
 - **Part2: Position Control**: [HexaMotor Position Control Manual (PDF)](HexaMotor%20Position%20Control.pdf)
 
+### Demo Video
+- **YouTube:** [HexaMotor Frequency Reponse](https://youtu.be/2T9OHVP0HO0?si=b-_GwjwfcQOfvFEu)
 
 ## License
 
