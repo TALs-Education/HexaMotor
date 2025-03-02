@@ -70,7 +70,7 @@ Utilize MATLAB and Simulink Support Packages for Arduino® hardware to interacti
 
 The entire setup has been designed in Fusion360 as an open-source project meant for educational applications.
 
-- **Fusion360 Project**: [HexaMotor Fusion360 Model](https://a360.co/3TU1BYP)
+- **Fusion360 Project**: [HexaMotor Fusion360 Model](https://a360.co/3Xp2fAi)
 
 ### Usage Instructions
 
