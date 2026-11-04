@@ -10,7 +10,7 @@ HexaMotor models and custom blocks, and which models make up the platform.
 (in `HexaMotorBlocks`) for the motor PWM, the motor current input and the encoder,
 and run on an unmodified MATLAB installation.
 
-## 1. Install the models custom blocks?
+## 1. Install the models custom blocks
 
 1. Copy the **whole HexaMotor folder**, including `HexaMotorBlocks`: the models and
    the block files travel together.
@@ -153,6 +153,7 @@ derive from `R4BlockBase` like the other blocks.
 |---|---|
 | *Unable to find System object 'R4PWM'* (or `EncoderVelocity`) | `HexaMotorBlocks` isn't on the path or isn't next to the models. Run `install_HexaMotor_V03` from the HexaMotor folder. |
 | Build fails with *No rule to make target '...\MW_EncoderVelocity.cpp'* (or another `MW_*.cpp`) with an old folder path | The Simulink build cache still has the folder from before the HexaMotor folder was moved or copied. Close the models, delete the `slprj` folder (and the `*.slxc` files) in the current MATLAB folder, and build again. |
+| Build fails in `MW_ArduinoHWInit.cpp` with *user-defined literal in preprocessor expression* (`_RTT_ANALOG_REF_`) | The model was saved with the R4 Minima patch installed, which stores the board's *Analog input reference voltage* as text. In *Hardware Settings > Analog input reference voltage*, select *Default* again and save (the V03 models are already fixed). |
 | Two copies of a block class (`which -all EncoderVelocity` shows more than one) | Run `install_HexaMotor_V03`; it removes old copies from the path. |
 | *A model with the same name is already loaded* | Close the other copy of the model (for example a model from another student folder) before opening this one. |
 | Encoder count stays 0 | Encoder pins must be interrupt-capable and on different IRQ channels (D2/D3 are). Don't use the same pins in two encoder blocks. |

@@ -12,9 +12,6 @@ function install_HexaMotor_V03(option)
 %   model stores only the block's class name and parameters, not the block
 %   code, so the folder must be on the MATLAB path on every machine. The V03
 %   models also add HexaMotorBlocks to the path when they open.
-%
-%   The V03 models don't need the R4 Minima patch. Only the old models in
-%   'Patched Matlab' (*_V03_Patched.slx) do.
 
 if nargin < 1
     option = '';
@@ -68,7 +65,7 @@ end
 if ~isfolder(blocksDir)
     error('HexaMotorBlocks folder not found next to install_HexaMotor_V03 (%s).', blocksDir);
 end
-oldDirs = {fullfile(root, 'R4MinimaPatch', 'blocks')};
+oldDirs = {};
 classes = {'EncoderVelocity', 'R4BlockBase', 'R4Encoder', 'R4PWM', 'R4AnalogInput'};
 for c = classes
     hits = which('-all', c{1});
@@ -116,19 +113,6 @@ try
     refresh(lb);
 catch
     % Library Browser not open or not available; it reads slblocks.m when it opens
-end
-
-%% R4 Minima patch (needed only by the models in 'Patched Matlab')
-patched = false;
-try
-    patched = isfile(fullfile(matlabshared.supportpkg.getSupportPackageRoot, 'toolbox', 'target', ...
-        'supportpackages', 'arduinobase', 'src', 'MW_PWM_backup.cpp'));
-catch
-end
-if patched
-    fprintf('R4 Minima patch: installed (not needed by the V03 models; only by the models in ''Patched Matlab'').\n');
-else
-    fprintf('R4 Minima patch: not installed (not needed by the V03 models).\n');
 end
 
 %% Models
